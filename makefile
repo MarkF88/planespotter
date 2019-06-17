@@ -1,6 +1,6 @@
 include make_env
 
-VERSION ?= latest
+VERSION ?= 0_2
 FRONTEND_IMAGE_NAME ?= frontend
 
 .PHONY: build_frontend
