@@ -155,14 +155,7 @@ def check_db_connectivity(**kw):
 
 
 def get_redis_key(icao):
-    if not check_tcp_socket(app.config['REDIS_HOST'],
-                            int(app.config['REDIS_PORT']), s_timeout=0.5):
-        return False
-    airborne_state = r_client.hget(icao, "airborne")
-    if not airborne_state:
-        return False
-    else:
-        return True
+    return false
 
 
 manager = flask_restless.APIManager(app, flask_sqlalchemy_db=db)

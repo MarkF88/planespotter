@@ -137,16 +137,8 @@ def details():
             acft = None
         icao = search_icoa
 
-    resp = req.get('{}/{}'.format(planedetails_url, icao),
-                   timeout=other_timeout)
-
-    if resp.status_code == 200:
-        plane_details = resp.json()
-    elif resp.status_code == 500:
-        return render_template('500.html', host_name=host_name,
-                               host_ip=host_ip), 500
-    else:
-        plane_details = None
+ 
+    plane_details = None
 
     resp = req.get('{}/{}'.format(planepicture_url, icao),
                    timeout=other_timeout)
