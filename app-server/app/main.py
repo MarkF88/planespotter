@@ -14,9 +14,7 @@ database_uri = 'mysql://{}:{}@{}/{}'.format(app.config['DATABASE_USER'],
                                             app.config['DATABASE_PWD'],
                                             app.config['DATABASE_URL'],
                                             app.config['DATABASE'])
-redis_server = app.config['REDIS_HOST']
-redis_port = app.config['REDIS_PORT']
-listen_port = int(app.config['LISTEN_PORT'])
+
 app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_POOL_TIMEOUT'] = 2
@@ -28,8 +26,6 @@ adsb_server = {'host': 'public-api.adsbexchange.com',
 airport_data_server = {'host': 'www.airport-data.com',
                        'path': '/api/ac_thumb.json', 'query': '?m='}
 
-r_client = redis.StrictRedis(host=redis_server, port=redis_port,
-                             socket_timeout=3)
 
 
 class Planetype(db.Model):
@@ -155,14 +151,7 @@ def check_db_connectivity(**kw):
 
 
 def get_redis_key(icao):
-    if not check_tcp_socket(app.config['REDIS_HOST'],
-                            int(app.config['REDIS_PORT']), s_timeout=0.5):
-        return False
-    airborne_state = r_client.hget(icao, "airborne")
-    if not airborne_state:
-        return False
-    else:
-        return True
+    return false
 
 
 manager = flask_restless.APIManager(app, flask_sqlalchemy_db=db)

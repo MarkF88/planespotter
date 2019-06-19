@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: planespotter-fe
-        image: marklfoley/planespotter-frontend:latest
+        image: marklfoley/planespotter-frontend:0_3
         imagePullPolicy: IfNotPresent
         env:
         - name: PLANESPOTTER_API_ENDPOINT
