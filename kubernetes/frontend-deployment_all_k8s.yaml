@@ -8,7 +8,7 @@ metadata:
     app: planespotter-frontend
     tier: frontend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: planespotter-frontend
@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: planespotter-fe
-        image: marklfoley/frontend:0_3
+        image: marklfoley/frontend:0_5
         imagePullPolicy: IfNotPresent
         env:
         - name: PLANESPOTTER_API_ENDPOINT

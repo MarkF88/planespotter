@@ -1,7 +1,6 @@
 include make_env
 
-VERSION ?= 0_3
-FRONTEND_IMAGE_NAME ?= frontend
+VERSION ?= 0_5
 
 .PHONY: build_frontend
 
@@ -19,4 +18,4 @@ push_appserver : build_appserver
 
 build_all : push_appserver push_frontend
 
-default: build_frontend
+default: build_all

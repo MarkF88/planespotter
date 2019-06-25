@@ -4,11 +4,11 @@ import requests as req
 import os
 import json
 import socket
-import netifaces
+
 
 app = Flask(__name__)
 host_name = host_name = socket.gethostname()
-port = os.getenv('PORT', '5000')
+port = os.getenv('PORT', '80')
 reg_timeout = float(os.getenv('TIMEOUT_REG', '5'))
 other_timeout = float(os.getenv('TIMEOUT_OTHER', '5'))
 app_server_hostname = os.getenv('PLANESPOTTER_API_ENDPOINT', 'localhost')
@@ -197,13 +197,13 @@ def internal_server_error(e):
 
 def trim_dict_content(dict_to_trim):
     new_dict = {}
-    for key, value in dict_to_trim.iteritems():
-        if isinstance(value, unicode) or isinstance(value, basestring):
+    for key, value in dict_to_trim.items():
+        if isinstance(value, str):
             trimmed = value.strip()
             new_dict[key] = trimmed
         elif isinstance(value, dict):
             new_sub_dict = {}
-            for sub_key, sub_value in value.iteritems():
+            for sub_key, sub_value in value.items():
                 trimmed = sub_value.strip()
                 new_sub_dict[sub_key] = trimmed
             new_dict[key] = new_sub_dict
@@ -212,10 +212,14 @@ def trim_dict_content(dict_to_trim):
     return new_dict
 
 
+
 def get_ip():
-    for iface in netifaces.interfaces():
-        if iface in ['eth0', 'nsx-eth0', 'ens192']:
-            return netifaces.ifaddresses(iface)[netifaces.AF_INET][0]['addr']
+    try:
+        host_ip = socket.gethostbyname(host_name)
+        print("IP : ",host_ip)
+        return host_ip
+    except:
+        print("Unable to get Hostname and IP")
 
 
 host_ip = get_ip()

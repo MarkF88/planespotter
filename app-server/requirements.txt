@@ -1,0 +1,4 @@
+Flask-Restless
+PyMySQL
+Flask-SQLAlchemy
+requests

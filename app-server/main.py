@@ -4,7 +4,6 @@ import flask_restless
 import pymysql
 import requests
 import socket
-import redis
 pymysql.install_as_MySQLdb()
 
 app = Flask(__name__)
@@ -124,8 +123,8 @@ def healthcheck():
     db_state = check_tcp_socket(app.config['DATABASE_URL'], 3306)
     position_data_state = check_tcp_socket(adsb_server['host'], 80)
     picture_data_state = check_tcp_socket(airport_data_server['host'], 80)
-    redis_server = check_tcp_socket(app.config['REDIS_HOST'],
-                                    int(app.config['REDIS_PORT']))
+    redis_server = True
+
 
     return jsonify({'database_connection': db_state,
                     'position_data': position_data_state,
@@ -151,7 +150,7 @@ def check_db_connectivity(**kw):
 
 
 def get_redis_key(icao):
-    return false
+    return False
 
 
 manager = flask_restless.APIManager(app, flask_sqlalchemy_db=db)
@@ -168,4 +167,4 @@ manager.create_api(Plane, methods=['GET', 'POST', 'DELETE'],
                    include_methods=['airborne'])
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=False, threaded=True, port=listen_port)
+    app.run(host='0.0.0.0', debug=False, threaded=True, port=80)
