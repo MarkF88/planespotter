@@ -2,7 +2,8 @@ include make_env
 
 VERSION ?= 0_5
 
-.PHONY: build_frontend
+
+build_all : push_appserver push_frontend
 
 build_frontend :
 	cd frontend && docker build -t $(NS)/frontend:$(VERSION) -f Dockerfile .
@@ -15,7 +16,3 @@ build_appserver :
 
 push_appserver : build_appserver
 	docker push $(NS)/planespotter-app-server:$(VERSION)
-
-build_all : push_appserver push_frontend
-
-default: build_all
