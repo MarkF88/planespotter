@@ -1,7 +1,7 @@
-network-profile-medium.json:
-{"description": "network profile with medium size LB",
-"name": "network-profile-medium",
-"parameters": {
-"lb_size": "medium"
-}
+{
+    "description": "network profile with medium size LB",
+    "name": "network-profile-medium",
+    "parameters": {
+        "lb_size": "medium"
+    }
 }
