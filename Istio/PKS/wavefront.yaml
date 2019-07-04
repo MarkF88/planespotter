@@ -58,12 +58,12 @@ spec:
     port: 2878
     protocol: TCP
   # Uncomment the below lines to consume Zipkin/Istio traces
-  - name: http
+  - name: http-zipkin
     port: 9411
     targetPort: 9411
     protocol: TCP
   # Added the following for Jaeger trace support
-  - name: http
+  - name: http=jaeger
     port: 40004
     targetPort: 40004
     protocol: TCP
