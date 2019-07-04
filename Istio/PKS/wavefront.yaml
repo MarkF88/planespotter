@@ -63,7 +63,7 @@ spec:
     targetPort: 9411
     protocol: TCP
   # Added the following for Jaeger trace support
-  - name: http=jaeger
+  - name: http-jaeger
     port: 40004
     targetPort: 40004
     protocol: TCP
