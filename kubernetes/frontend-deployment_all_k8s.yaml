@@ -29,6 +29,8 @@ spec:
           value: "5"
         - name: TIMEOUT_OTHER
           value: "5"
+        - name: WAVEFRONT_URL
+          value: wavefront-proxy.default.svc.cluster.local
 ---
 apiVersion: v1
 kind: Service
