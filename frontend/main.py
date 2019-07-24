@@ -4,7 +4,10 @@ import requests as req
 import os
 import json
 import socket
-
+from opentracing_instrumentation.client_hooks import install_all_patches
+from jaeger_client import Config
+from flask_opentracing import FlaskTracing
+import logging
 
 app = Flask(__name__)
 host_name = host_name = socket.gethostname()
@@ -12,6 +15,7 @@ port = os.getenv('PORT', '80')
 reg_timeout = float(os.getenv('TIMEOUT_REG', '5'))
 other_timeout = float(os.getenv('TIMEOUT_OTHER', '5'))
 app_server_hostname = os.getenv('PLANESPOTTER_API_ENDPOINT', 'localhost')
+jaeger_host = os.getenv('JAEGER_HOST', 'localhost')
 registry_url = 'http://{}/api/planes'.format(app_server_hostname)
 planetypes_url = 'http://{}/api/planetypes'.format(app_server_hostname)
 planedetails_url = 'http://{}/api/planedetails'.format(app_server_hostname)
@@ -137,7 +141,6 @@ def details():
             acft = None
         icao = search_icoa
 
- 
     plane_details = None
 
     resp = req.get('{}/{}'.format(planepicture_url, icao),
@@ -212,11 +215,10 @@ def trim_dict_content(dict_to_trim):
     return new_dict
 
 
-
 def get_ip():
     try:
         host_ip = socket.gethostbyname(host_name)
-        print("IP : ",host_ip)
+        print("IP : ", host_ip)
         return host_ip
     except:
         print("Unable to get Hostname and IP")
@@ -224,7 +226,23 @@ def get_ip():
 
 host_ip = get_ip()
 
-
 if __name__ == '__main__':
     debugmode = os.getenv('DEBUG_MODE', False)
+
+    log_level = logging.DEBUG
+    logging.getLogger('').handlers = []
+    logging.basicConfig(format='%(asctime)s %(message)s', level=log_level)
+
+    # Create configuration object with enabled logging and sampling of all requests.
+    config = Config(config={'sampler': {'type': 'const', 'param': 1},
+                            'logging': True,
+                            'local_agent':
+                            # Also, provide a hostname of Jaeger instance to send traces to.
+                                {'reporting_host': jaeger_host}},
+                    # Service name can be arbitrary string describing this particular web service.
+                    service_name="markf_vmworld_frontend")
+    jaeger_tracer = config.initialize_tracer()
+    tracing = FlaskTracing(jaeger_tracer, trace_all_requests=True, app = app)
+    install_all_patches()
+
     app.run(host='0.0.0.0', debug=bool(debugmode), port=int(port))

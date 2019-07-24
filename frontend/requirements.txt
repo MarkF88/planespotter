@@ -1,4 +1,7 @@
 Flask
 flask-paginate
 requests
-
+opentracing
+Flask-Opentracing
+opentracing_instrumentation
+jaeger_client

@@ -1,6 +1,6 @@
 include make_env
 
-VERSION ?= 0_5
+VERSION ?= 0_6
 
 
 build_all : push_appserver push_frontend
