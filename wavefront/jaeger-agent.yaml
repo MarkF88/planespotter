@@ -1,0 +1,58 @@
+# Need to change YOUR_CLUSTER and YOUR_API_TOKEN accordingly
+
+apiVersion: apps/v1
+# Kubernetes versions after 1.9.0 should use apps/v1
+# Kubernetes version 1.8.x should use apps/v1beta2
+# Kubernetes versions before 1.8.0 should use apps/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: jaeger-agent
+    name: jaeger-agent
+  name: jaeger-agent
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jaeger-agent
+  template:
+    metadata:
+      labels:
+        app: jaeger-agent
+    spec:
+      containers:
+      - name: jaeger-agent
+        image: jaegertracing/jaeger-agent:1.9.0
+        imagePullPolicy: Always
+        env:
+        - name: REPORTER_TCHANNEL_HOST_PORT
+          value: wavefront-proxy:4004
+        - name: HOSTNAME
+          value: mark.foley.host.com
+        ports:
+        - containerPort: 6831
+          protocol: UDP
+        - containerPort: 6832
+          protocol: UDP
+        securityContext:
+          privileged: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaeger-agent
+  labels:
+    app: jaeger-agent
+  namespace: default
+spec:
+  ports:
+  - name: jaegerthrift
+    port: 2878
+    protocol: TCP
+  - name: jaegerthriftbinary
+    port: 9411
+    targetPort: 9411
+    protocol: TCP
+  selector:
+    app: jaeger-agent
