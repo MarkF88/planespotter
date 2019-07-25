@@ -27,7 +27,7 @@ spec:
         imagePullPolicy: Always
         env:
         - name: REPORTER_TCHANNEL_HOST_PORT
-          value: wavefront-proxy:4004
+          value: wavefront-proxy:40004
         - name: HOSTNAME
           value: mark.foley.host.com
         ports:
