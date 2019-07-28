@@ -48,11 +48,10 @@ metadata:
 spec:
   ports:
   - name: jaegerthrift
-    port: 2878
-    protocol: TCP
+    port: 6831
+    protocol: UDP
   - name: jaegerthriftbinary
-    port: 9411
-    targetPort: 9411
-    protocol: TCP
+    port: 6832
+    protocol: UDP
   selector:
     app: jaeger-agent
