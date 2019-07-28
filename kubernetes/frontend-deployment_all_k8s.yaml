@@ -21,7 +21,7 @@ spec:
       containers:
       - name: planespotter-fe
         image: marklfoley/frontend:0_6
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         env:
         - name: PLANESPOTTER_API_ENDPOINT
           value: planespotter-svc
@@ -32,7 +32,7 @@ spec:
         - name: WAVEFRONT_URL
           value: wavefront-proxy.default.svc.cluster.local
         - name: JAEGER_HOST
-          value: jaeger-svc
+          value: jaeger-agent.default.svc.cluster.local
 ---
 apiVersion: v1
 kind: Service

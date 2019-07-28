@@ -1,7 +1,8 @@
 Flask
 flask-paginate
 requests
-opentracing
+opentracing>=2.0,<3
 Flask-Opentracing
-opentracing_instrumentation
+opentracing_instrumentation==3.0.1
 jaeger_client
+
