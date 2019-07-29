@@ -4,7 +4,12 @@ import flask_restless
 import pymysql
 import requests
 import socket
+from opentracing_instrumentation.client_hooks import install_all_patches
+from jaeger_client import Config
+from flask_opentracing import FlaskTracing
+import logging
 pymysql.install_as_MySQLdb()
+
 
 app = Flask(__name__)
 app.config.from_pyfile('config/config.cfg')
@@ -13,6 +18,8 @@ database_uri = 'mysql://{}:{}@{}/{}'.format(app.config['DATABASE_USER'],
                                             app.config['DATABASE_PWD'],
                                             app.config['DATABASE_URL'],
                                             app.config['DATABASE'])
+
+jaeger_host = app.config['JAEGER_HOST']
 
 app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -167,4 +174,21 @@ manager.create_api(Plane, methods=['GET', 'POST', 'DELETE'],
                    include_methods=['airborne'])
 
 if __name__ == '__main__':
+    debugmode = os.getenv('DEBUG_MODE', False)
+
+    log_level = logging.DEBUG
+    logging.getLogger('').handlers = []
+    logging.basicConfig(format='%(asctime)s %(message)s', level=log_level)
+
+    # Create configuration object with enabled logging and sampling of all requests.
+    config = Config(config={'sampler': {'type': 'const', 'param': 1},
+                            'logging': True,
+                            'local_agent':
+                            # Also, provide a hostname of Jaeger instance to send traces to.
+                                {'reporting_host': jaeger_host}},
+                    # Service name can be arbitrary string describing this particular web service.
+                    service_name="markf_vmworld_appserver")
+    jaeger_tracer = config.initialize_tracer()
+    tracing = FlaskTracing(jaeger_tracer, trace_all_requests=True, app = app)
+    install_all_patches()
     app.run(host='0.0.0.0', debug=False, threaded=True, port=80)

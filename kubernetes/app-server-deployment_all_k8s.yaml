@@ -18,8 +18,8 @@ spec:
     spec:
       containers:
       - name: planespotter
-        image: marklfoley/planespotter-app-server:0_5
-        imagePullPolicy: IfNotPresent
+        image: marklfoley/planespotter-app-server:0_6
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
         volumeMounts:
@@ -41,6 +41,7 @@ data:
     DATABASE_USER = 'planespotter'
     DATABASE_PWD = 'VMware1!'
     DATABASE = 'planespotter'
+    JAEGER_HOST = 'jaeger-agent.default.svc.cluster.local'
     LISTEN_PORT = 80
 ---
 apiVersion: v1
