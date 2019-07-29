@@ -18,8 +18,8 @@ spec:
     spec:
       containers:
       - name: planespotter
-        image: marklfoley/planespotter-app-server:0_5
-        imagePullPolicy: IfNotPresent
+        image: marklfoley/planespotter-app-server:0_6
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
         volumeMounts:
