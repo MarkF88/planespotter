@@ -2,3 +2,7 @@ Flask-Restless
 PyMySQL
 Flask-SQLAlchemy
 requests
+opentracing>=2.0,<3
+Flask-Opentracing
+opentracing_instrumentation==3.0.1
+jaeger_client
