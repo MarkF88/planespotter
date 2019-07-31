@@ -30,9 +30,9 @@ spec:
         - name: TIMEOUT_OTHER
           value: "5"
         - name: WAVEFRONT_URL
-          value: wavefront-proxy.default.svc.cluster.local
+          value: wavefront-proxy
         - name: JAEGER_HOST
-          value: jaeger-agent.default.svc.cluster.local
+          value: jaeger-agent
 ---
 apiVersion: v1
 kind: Service

@@ -41,7 +41,7 @@ data:
     DATABASE_USER = 'planespotter'
     DATABASE_PWD = 'VMware1!'
     DATABASE = 'planespotter'
-    JAEGER_HOST = 'jaeger-agent.default.svc.cluster.local'
+    JAEGER_HOST = 'jaeger-agent'
     LISTEN_PORT = 80
 ---
 apiVersion: v1

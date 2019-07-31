@@ -10,7 +10,7 @@ metadata:
     app: jaeger-agent
     name: jaeger-agent
   name: jaeger-agent
-  namespace: default
+  namespace: planespotter
 spec:
   replicas: 1
   selector:
@@ -44,7 +44,7 @@ metadata:
   name: jaeger-agent
   labels:
     app: jaeger-agent
-  namespace: default
+  namespace: planespotter
 spec:
   ports:
   - name: jaegerthrift
