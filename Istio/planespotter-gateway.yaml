@@ -23,7 +23,7 @@ spec:
   hosts:
   - "*"
   gateways:
-  - planespotter-gateway.planespotter.svc.cluster.local
+    - planespotter-gateway.planespotter.svc.cluster.local
   http:
     route:
     - destination:
