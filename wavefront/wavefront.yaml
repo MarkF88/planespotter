@@ -32,7 +32,7 @@ spec:
           value: c7b3f7c4-92b4-473b-ade6-b08a05788430
         # Uncomment the below lines to consume Zipkin/Istio traces
         - name: WAVEFRONT_PROXY_ARGS
-          value: --traceZipkinListenerPorts 9411 --traceJaegerListenerPorts 40004 --hostname mark.foley.vmworld.com
+          value: --traceZipkinListenerPorts 9411 --traceJaegerListenerPorts 40004 --hostname mark.foley.vmworld.com --traceJaegerApplicationName Markf_Planespotter
         ports:
         - containerPort: 2878
           protocol: TCP

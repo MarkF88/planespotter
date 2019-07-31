@@ -7,8 +7,4 @@ export PATH="$PATH:/root/istio-1.2.0/bin"
 
 
 Deploy the wavefront proxy, note that the wavefront URL and token must be updated and Zipkin AND jaeger tracing will need to be enabledd.
-
-Delete the Istio zipkin and deploy the Zipkin redirect
-
-kubectl delete svc zipkin -n istio-system
-kubectl apply -f zipkin-svc-redirect.yml
+Deploy the Jaeger proxy
