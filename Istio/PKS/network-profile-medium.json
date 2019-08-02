@@ -1,7 +1,0 @@
-{
-    "description": "network profile with medium size LB",
-    "name": "network-profile-medium",
-    "parameters": {
-        "lb_size": "medium"
-    }
-}
