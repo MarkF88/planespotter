@@ -4,6 +4,7 @@ import flask_restless
 import pymysql
 import requests
 import socket
+from opentracing_instrumentation.request_context import get_current_span, span_in_context
 from opentracing_instrumentation.client_hooks import install_all_patches
 from jaeger_client import Config
 from flask_opentracing import FlaskTracing
@@ -110,6 +111,7 @@ def planedetails(icao):
 
 @app.route('/api/planepicture/<icao>')
 def planepicture(icao):
+    
     if not check_tcp_socket(airport_data_server['host'], 80):
         return 'Connection to Airport Data Server broken', 500
 
@@ -140,14 +142,16 @@ def healthcheck():
 
 
 def check_tcp_socket(host, port, s_timeout=2):
-    try:
-        tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        tcp_socket.settimeout(s_timeout)
-        tcp_socket.connect((host, port))
-        tcp_socket.close()
-        return True
-    except (socket.timeout, socket.error):
-        return False
+    with jaeger_tracer.start_span('check_tcp_socket', child_of=get_current_span()) as span:
+        with span_in_context(span):
+            try:
+                tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                tcp_socket.settimeout(s_timeout)
+                tcp_socket.connect((host, port))
+                tcp_socket.close()
+                return True
+            except (socket.timeout, socket.error):
+                return False
 
 
 def check_db_connectivity(**kw):
@@ -174,7 +178,6 @@ manager.create_api(Plane, methods=['GET', 'POST', 'DELETE'],
                    include_methods=['airborne'])
 
 if __name__ == '__main__':
-    debugmode = os.getenv('DEBUG_MODE', False)
 
     log_level = logging.DEBUG
     logging.getLogger('').handlers = []
