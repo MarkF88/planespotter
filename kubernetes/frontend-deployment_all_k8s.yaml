@@ -26,7 +26,7 @@ spec:
         - name: PLANESPOTTER_API_ENDPOINT
           value: planespotter-svc
         - name: TIMEOUT_REG
-          value: "5"
+          value: "30"
         - name: TIMEOUT_OTHER
           value: "30"
         - name: WAVEFRONT_URL
