@@ -28,7 +28,7 @@ spec:
         - name: TIMEOUT_REG
           value: "5"
         - name: TIMEOUT_OTHER
-          value: "5"
+          value: "30"
         - name: WAVEFRONT_URL
           value: wavefront-proxy
         - name: JAEGER_HOST
