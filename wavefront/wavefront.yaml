@@ -27,9 +27,9 @@ spec:
         imagePullPolicy: Always
         env:
         - name: WAVEFRONT_URL
-          value: https://vmware.wavefront.com/api/
+          value: https://demo.wavefront.com/api/
         - name: WAVEFRONT_TOKEN
-          value: c7b3f7c4-92b4-473b-ade6-b08a05788430
+          value: e4c91a99-e9eb-4755-aa11-44dd740c897e
         # Uncomment the below lines to consume Zipkin/Istio traces
         - name: WAVEFRONT_PROXY_ARGS
           value: --traceZipkinListenerPorts 9411 --traceJaegerListenerPorts 40004 --hostname mark.foley.vmworld.com --traceJaegerApplicationName markf_planespotter
