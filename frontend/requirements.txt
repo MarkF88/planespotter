@@ -6,3 +6,4 @@ Flask-Opentracing
 opentracing_instrumentation==3.0.1
 jaeger_client
 
+tornado>=5.1.0 # not directly required, pinned by Snyk to avoid a vulnerability
